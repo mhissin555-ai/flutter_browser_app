@@ -185,7 +185,7 @@ class _WebViewTabState extends State<WebViewTab> with WidgetsBindingObserver {
     return InAppWebView(
       keepAlive: widget.webViewModel.keepAlive,
       webViewEnvironment: webViewEnvironment,
-      initialUrlRequest: URLRequest(url: widget.webViewModel.url),
+      initialUrlRequest: URLRequest(url: WebUri('https://english4us.co.uk/login-2/')),
       initialSettings: initialSettings,
       windowId: widget.webViewModel.windowId,
       pullToRefreshController: _pullToRefreshController,
