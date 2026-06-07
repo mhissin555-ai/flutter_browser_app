@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class AnimatedFlutterBrowserLogo extends StatefulWidget {
+class AnimatedFlutterBrowserLogo extends StatelessWidget {
   final Duration animationDuration;
   final double size;
 
@@ -11,38 +11,15 @@ class AnimatedFlutterBrowserLogo extends StatefulWidget {
   });
 
   @override
-  State<StatefulWidget> createState() => _AnimatedFlutterBrowserLogoState();
-}
-
-class _AnimatedFlutterBrowserLogoState extends State<AnimatedFlutterBrowserLogo>
-    with TickerProviderStateMixin {
-  late AnimationController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-
-    _controller =
-        AnimationController(duration: widget.animationDuration, vsync: this);
-    _controller.repeat(reverse: true);
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return ScaleTransition(
-      scale: Tween(begin: 0.75, end: 2.0).animate(
-          CurvedAnimation(parent: _controller, curve: Curves.elasticOut)),
-      child: SizedBox(
-        height: widget.size,
-        width: widget.size,
-        child: const CircleAvatar(
-            backgroundImage: AssetImage("assets/icon/icon.png")),
+    return Scaffold(
+      backgroundColor: Colors.white, // هنا لون الخلفية أبيض، تقدر تغيره
+      body: Center(
+        child: Image.network(
+          'https://english4us.co.uk/wp-content/uploads/2023/05/ii.png', // حط رابط لوجو أكاديميتك المباشر هنا مكان ده
+          width: 200,
+          height: 200,
+        ),
       ),
     );
   }
