@@ -63,7 +63,7 @@ android {
         }
     }
 
-    buildTypes {
+    buildType {
         release {
             signingConfig signingConfigs.release
             ndk {
@@ -79,6 +79,15 @@ android {
 
 flutter {
     source '../..'
+}
+
+// السطر السحري ده بيجبر السيرفر يرفع نسخة الكوتلن لـ 1.8.22 عشان يتخطى الخطأ اللي ظهر في الصورة image_223682.png
+buildscript {
+    ext.kotlin_version = '1.8.22'
+    repositories {
+        google()
+        mavenCentral()
+    }
 }
 
 dependencies {
