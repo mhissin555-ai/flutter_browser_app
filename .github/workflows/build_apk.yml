@@ -26,12 +26,47 @@ jobs:
           rm -rf android
           flutter create . --platforms android
 
-      - name: Force Modern Kotlin and Gradel Fixes
+      - name: Force Overwrite settings.gradle
         run: |
-          # تعديل نظام الكوتلن الحديث جوه الـ settings.gradle الافتراضي اللي السيرفر بيكريهه
-          sed -i 's/id "org.jetbrains.kotlin.android" version "[^"]*"/id "org.jetbrains.kotlin.android" version "1.9.24"/g' android/settings.gradle
-          
-          # تظبيط الـ Proguard للكاش عشان ما يضربش مع المكتبات القديمة
+          # مسح الملف القديم تماماً وكتابة ملف جديد بنسخة كوتلن 1.9.24 المضمونة
+          rm -f android/settings.gradle
+          cat << 'EOF' > android/settings.gradle
+          pluginManagement {
+              def flutterSdkPath = {
+                  def properties = new Properties()
+                  def propertiesFile = new File(settingsDir, "local.properties")
+                  if (propertiesFile.exists()) {
+                      propertiesFile.withReader("UTF-8") { reader -> properties.load(reader) }
+                  }
+                  def sdkPath = properties.getProperty("flutter.sdk")
+                  if (sdkPath == null) {
+                      sdkPath = System.getenv("FLUTTER_ROOT")
+                  }
+                  if (sdkPath == null) {
+                      throw new GradleException("Flutter SDK not found. Define flutter.sdk in local.properties or FLUTTER_ROOT in environment variables.")
+                  }
+                  return sdkPath
+              }
+
+              includeBuild("${flutterSdkPath()}/packages/flutter_tools/gradle")
+
+              repositories {
+                  google()
+                  mavenCentral()
+                  gradlePluginPortal()
+              }
+          }
+
+          plugins {
+              id "dev.flutter.flutter-gradle-plugin" version "1.0.0" apply false
+              id "org.jetbrains.kotlin.android" version "1.9.24" apply false
+          }
+
+          include ':app'
+          EOF
+
+      - name: Fix Deprecated Proguard in Cache
+        run: |
           find ~/.pub-cache/hosted/pub.dev -name "build.gradle" -exec sed -i 's/getDefaultProguardFile(\x27proguard-android.txt\x27)/getDefaultProguardFile(\x27proguard-android-optimize.txt\x27)/g' {} +
           find ~/.pub-cache/hosted/pub.dev -name "build.gradle" -exec sed -i 's/getDefaultProguardFile("proguard-android.txt")/getDefaultProguardFile("proguard-android-optimize.txt")/g' {} +
 
