@@ -19,19 +19,20 @@ jobs:
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          channel: 'stable'
+          flutter-version: '3.19.6' # تثبيت إصدار متوافق عشان يتخطى خطأ الأيقونات اللي في صورة image_205cae.png
 
       - name: Recreate Android Folder
         run: |
           rm -rf android
           flutter create . --platforms android
 
+      - name: Fix Deprecated Proguard in Cache
+        run: |
+          find ~/.pub-cache/hosted/pub.dev -name "build.gradle" -exec sed -i 's/getDefaultProguardFile(\x27proguard-android.txt\x27)/getDefaultProguardFile(\x27proguard-android-optimize.txt\x27)/g' {} +
+          find ~/.pub-cache/hosted/pub.dev -name "build.gradle" -exec sed -i 's/getDefaultProguardFile("proguard-android.txt")/getDefaultProguardFile("proguard-android-optimize.txt")/g' {} +
+
       - name: Install dependencies
         run: flutter pub get
-
-      - name: Fix Deprecated Proguard in Packages
-        run: |
-          find ~/.pub-cache/hosted/pub.dev -name "build.gradle" -exec sed -i "s/getDefaultProguardFile('proguard-android.txt')/getDefaultProguardFile('proguard-android-optimize.txt')/g" {} +
 
       - name: Build APK
         run: flutter build apk --release
