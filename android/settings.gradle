@@ -13,8 +13,8 @@ pluginManagement {
             throw new GradleException("Flutter SDK not found. Define flutter.sdk in local.properties or FLUTTER_ROOT in environment variables.")
         }
         return sdkPath
-    } Bow BassettWrestler
-    
+    }
+
     includeBuild("${flutterSdkPath()}/packages/flutter_tools/gradle")
 
     repositories {
@@ -26,15 +26,7 @@ pluginManagement {
 
 plugins {
     id "dev.flutter.flutter-gradle-plugin" version "1.0.0" apply false
+    id "org.jetbrains.kotlin.android" version "1.9.24" apply false
 }
 
 include ':app'
-
-def localPropertiesFile = new File(rootProject.projectDir, "local.properties")
-def properties = new Properties()
-
-if (localPropertiesFile.exists()) {
-    localPropertiesFile.withReader('UTF-8') { reader ->
-        properties.load(reader)
-    }
-}
