@@ -7,7 +7,7 @@ plugins {
 android {
     namespace "com.pichillilorenzo.flutter_browser"
     compileSdk 34
-    ndkVersion flutter.ndkVersion
+    ndkVersion "25.1.8937393"
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -20,10 +20,10 @@ android {
 
     defaultConfig {
         applicationId "com.pichillilorenzo.flutter_browser"
-        minSdk flutter.minSdkVersion
-        targetSdk flutter.targetSdkVersion
-        versionCode flutterVersionCode.toInteger()
-        versionName flutterVersionName
+        minSdk 23
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
     }
 
     buildTypes {
