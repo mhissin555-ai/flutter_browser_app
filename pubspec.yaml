@@ -98,9 +98,6 @@ flutter:
   assets:
     - assets/images/google_logo.png
     - assets/images/yahoo_logo.png
-    - assets/images/bing_logo.png
-    - assets/images/duckduckgo_logo.png
-    - assets/images/ecosia_logo.png
     - assets/icon/icon.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
