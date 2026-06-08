@@ -26,12 +26,12 @@ jobs:
           rm -rf android
           flutter create . --platforms android
 
-      - name: Inject New Kotlin Version
+      - name: Force Modern Kotlin and Gradel Fixes
         run: |
+          # تعديل نظام الكوتلن الحديث جوه الـ settings.gradle الافتراضي اللي السيرفر بيكريهه
           sed -i 's/id "org.jetbrains.kotlin.android" version "[^"]*"/id "org.jetbrains.kotlin.android" version "1.9.24"/g' android/settings.gradle
-
-      - name: Fix Deprecated Proguard in Cache
-        run: |
+          
+          # تظبيط الـ Proguard للكاش عشان ما يضربش مع المكتبات القديمة
           find ~/.pub-cache/hosted/pub.dev -name "build.gradle" -exec sed -i 's/getDefaultProguardFile(\x27proguard-android.txt\x27)/getDefaultProguardFile(\x27proguard-android-optimize.txt\x27)/g' {} +
           find ~/.pub-cache/hosted/pub.dev -name "build.gradle" -exec sed -i 's/getDefaultProguardFile("proguard-android.txt")/getDefaultProguardFile("proguard-android-optimize.txt")/g' {} +
 
