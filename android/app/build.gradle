@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace "com.example.flutter_browser_app"
+    namespace "com.pichillilorenzo.flutter_browser"
     compileSdk 34
     ndkVersion "25.1.8937393"
 
@@ -19,7 +19,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.example.flutter_browser_app"
+        applicationId "com.pichillilorenzo.flutter_browser"
         minSdk 21
         targetSdk 34
         versionCode 1
